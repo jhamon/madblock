@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "Unpresidented",
+  "description": "Eliminate political stress in your life",
+  "version": "1.0",
+
+//  "browser_action": {
+//    "default_icon": "icon.png",
+//    "default_popup": "popup.html",
+//    "default_title": "Silence the noise"
+//  },
+  "permissions": [
+    "storage",
+    "https://ajax.googleapis.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*", "https://www.nytimes.com/*"],
+      "css": [],
+      "js": ["unpresidented.js"]
+    }
+  ]
+}
