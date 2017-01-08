@@ -1,5 +1,9 @@
+function appendClass(element, className) {
+  element.setAttribute("class", element.getAttribute("class") + " " + className)
+}
+
 function redact(element) {
-  element.setAttribute("style", "color: black !important; background: black !important;");
+  appendClass(element, 'redacted')
 }
 
 function inBlacklist(element) {

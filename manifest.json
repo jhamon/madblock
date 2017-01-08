@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "css": [],
+      "css": ["unpresidented.css"],
       "js": ["unpresidented.js"]
     }
   ]
