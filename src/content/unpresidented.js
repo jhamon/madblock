@@ -1,30 +1,7 @@
 import StorageAccess from '../common/storage_access.js';
+import Redactor from './redactor.js'
 
 let cachedConfig = {};
-
-function appendClass(element, className) {
-  element.setAttribute("class", element.getAttribute("class") + " " + className)
-}
-
-function removeClass(element, className) {
-  element.setAttribute("class", element.getAttribute("class").replace(className, ""));
-}
-
-function getRedacted() {
-  return document.getElementsByClassName('redacted');
-}
-
-function redact(element) {
-  appendClass(element, 'redacted')
-}
-
-function unredact() {
-  console.log("unredacting")
-  var previouslyRedacted = getRedacted();
-  for (var i=0; i < previouslyRedacted.length; i++) {
-    removeClass(previouslyRedacted[i], 'redacted' );
-  }
-}
 
 function blacklistFromConfig(config) {
   var blacklist = Object.keys(config).filter((key) => {
@@ -75,19 +52,18 @@ function getElements(tag) {
 }
 
 function unpresident() {
-  unredact();
+  Redactor.unredact();
   var inBlacklist =  blacklistFilter(cachedConfig);
 
-  filter(getElements('a'), inBlacklist).map(redact);
-  filter(getElements('p'), inBlacklist).map(redact);
-  //filter(getElements('li'), inBlacklist).map(redact);
-  filter(getElements('span'), inBlacklist).map(redact);
-  filter(getElements('em'), inBlacklist).map(redact);
-  filter(getElements('h1'), inBlacklist).map(redact);
-  filter(getElements('h2'), inBlacklist).map(redact);
-  filter(getElements('h3'), inBlacklist).map(redact);
-  filter(getElements('h4'), inBlacklist).map(redact);
-  filter(filter(getElements('div'), isLeafNode), inBlacklist).map(redact);
+  filter(getElements('article'), inBlacklist).map(Redactor.redact);
+  filter(getElements('p'), inBlacklist).map(Redactor.redact);
+  filter(getElements('span'), inBlacklist).map(Redactor.redact);
+  filter(getElements('em'), inBlacklist).map(Redactor.redact);
+  filter(getElements('h1'), inBlacklist).map(Redactor.redact);
+  filter(getElements('h2'), inBlacklist).map(Redactor.redact);
+  filter(getElements('h3'), inBlacklist).map(Redactor.redact);
+  filter(getElements('h4'), inBlacklist).map(Redactor.redact);
+  //filter(filter(getElements('div'), isLeafNode), inBlacklist).map(Redactor.redact);
 }
 
 StorageAccess.get((config) => {
