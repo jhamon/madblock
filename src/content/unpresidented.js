@@ -74,3 +74,20 @@ function unpresident() {
 unpresident();
 document.addEventListener('DOMContentLoaded', unpresident);
 window.addEventListener('load', unpresident);
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (key in changes) {
+    var storageChange = changes[key];
+    if (key === 'unpresidented_configuration') {
+      unpresident();
+    }
+
+    console.log('Storage key "%s" in namespace "%s" changed. ' +
+        'Old value was "%s", new value is "%s".',
+        key,
+        namespace,
+        JSON.stringify(storageChange.oldValue),
+        JSON.stringify(storageChange.newValue));
+  }
+});
+
