@@ -1,29 +1,48 @@
+import StorageAccess from '../common/storage_access.js';
+
+let cachedConfig = {};
+
 function appendClass(element, className) {
   element.setAttribute("class", element.getAttribute("class") + " " + className)
+}
+
+function removeClass(element, className) {
+  element.setAttribute("class", element.getAttribute("class").replace(className, ""));
+}
+
+function getRedacted() {
+  return document.getElementsByClassName('redacted');
 }
 
 function redact(element) {
   appendClass(element, 'redacted')
 }
 
-function inBlacklist(element) {
-  var blacklist = [
-    "Trump",
-    "Obama",
-    "Russia",
-    "Putin",
-    "Hillary",
-    "GOP",
-    "DNC",
-    "Democrat",
-    "Republican",
-    "President",
-    "presidential",
-    "POTUS"
-  ];
-  return any(blacklist, function (word) {
-    return contains(element, word)
+function unredact() {
+  console.log("unredacting")
+  var previouslyRedacted = getRedacted();
+  for (var i=0; i < previouslyRedacted.length; i++) {
+    removeClass(previouslyRedacted[i], 'redacted' );
+  }
+}
+
+function blacklistFromConfig(config) {
+  var blacklist = Object.keys(config).filter((key) => {
+    return config[key]
   });
+  console.log("The blacklist is", blacklist);
+  return blacklist;
+}
+
+function blacklistFilter(config) {
+  console.log('building a blacklist filter')
+  var blacklist = blacklistFromConfig(config);
+
+  return function(element) {
+    return any(blacklist, function (word) {
+      return contains(element, word)
+    });
+  }
 }
 
 function any(list, func) {
@@ -56,8 +75,8 @@ function getElements(tag) {
 }
 
 function unpresident() {
-  var tags = ['a', 'p', 'span', 'em', 'strong', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-
+  unredact();
+  var inBlacklist =  blacklistFilter(cachedConfig);
 
   filter(getElements('a'), inBlacklist).map(redact);
   filter(getElements('p'), inBlacklist).map(redact);
@@ -71,23 +90,14 @@ function unpresident() {
   filter(filter(getElements('div'), isLeafNode), inBlacklist).map(redact);
 }
 
-unpresident();
+StorageAccess.get((config) => {
+  cachedConfig = config;
+});
+
 document.addEventListener('DOMContentLoaded', unpresident);
 window.addEventListener('load', unpresident);
 
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-  for (key in changes) {
-    var storageChange = changes[key];
-    if (key === 'unpresidented_configuration') {
-      unpresident();
-    }
-
-    console.log('Storage key "%s" in namespace "%s" changed. ' +
-        'Old value was "%s", new value is "%s".',
-        key,
-        namespace,
-        JSON.stringify(storageChange.oldValue),
-        JSON.stringify(storageChange.newValue));
-  }
+StorageAccess.onChange(function(config) {
+  cachedConfig = config;
+  unpresident();
 });
-

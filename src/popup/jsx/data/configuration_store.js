@@ -2,6 +2,7 @@ import ConfigurationDispatcher from './configuration_dispatcher.js';
 import Dispatcher from './configuration_dispatcher.js';
 import ConfigurationActionTypes from './configuration_action_types.js';
 import {EventEmitter} from 'events'
+import StorageAccess from '../../../common/storage_access.js';
 
 const INITIAL_CONFIGURATION = {
   "Trump": true,
@@ -19,15 +20,15 @@ const INITIAL_CONFIGURATION = {
 };
 
 const CHANGE_EVENT = 'change';
-const STORAGE_KEY = 'unpresidented:config';
 
 class ConfigurationStore extends EventEmitter {
   constructor() {
     super();
     let store = this;
-    chrome.storage.sync.get(STORAGE_KEY, function(loadedConfig) {
-      if (!chrome.runtime.error && Object.keys(loadedConfig).length === 1) {
-        store._configuration = loadedConfig[STORAGE_KEY];
+    StorageAccess.get(function(loadedConfig) {
+      console.log("loaded config", loadedConfig);
+      if (loadedConfig !== undefined) {
+        store._configuration = loadedConfig;
         store.emit(CHANGE_EVENT);
       } else {
         store._configuration = INITIAL_CONFIGURATION;
@@ -46,14 +47,7 @@ class ConfigurationStore extends EventEmitter {
 
   commitChange() {
     let store = this;
-    let payload = {};
-    payload[`${STORAGE_KEY}`] = this._configuration;
-    chrome.storage.sync.set(payload, function() {
-      if (chrome.runtime.error) {
-        console.error("Runtime error while persisting to chrome storage");
-      }
-      store.emit(CHANGE_EVENT);
-    });
+    StorageAccess.set(this._configuration, () => { store.emit(CHANGE_EVENT) });
   }
 
   enable(keyword) {
