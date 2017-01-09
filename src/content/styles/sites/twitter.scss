@@ -1,0 +1,22 @@
+@mixin twitter {
+  display: none !important;
+  background: black !important;
+  color: transparent !important;
+
+  //.content, .tweet, .tweet.js-stream-tweet {
+  //  display: none !important;
+  //
+  //  .QuoteTweet,
+  //  .TwitterCardsGrid,
+  //  .Icon,
+  //  .Icon--verified,
+  //  .Emoji,
+  //  img,
+  //  div.AdaptiveMedia.is-square > div,
+  //  div.stream-item-header > a > strong > span,
+  //  div.stream-item-header > a > strong > span.Emoji.Emoji--forLinks,
+  //  div.js-tweet-text-container > p img.twitter-hashflag {
+  //    display: none !important;
+  //  }
+  //}
+}

@@ -1,5 +1,8 @@
+@import 'sites/twitter';
+@import 'sites/facebook';
 @import 'sites/nytimes';
 @import 'sites/cnn';
+@import 'sites/metafilter';
 
 [unpresidented=true] {
   .redacted {
@@ -8,12 +11,20 @@
       background: black !important;
     }
 
+    &.twitter-redacted {
+      @include twitter;
+    }
+    &.facebook-redacted {
+      @include facebook;
+    }
     &.nytimes-redacted {
       @include nytimes;
     }
-
     &.cnn-redacted {
       @include cnn;
+    }
+    &.metafilter-redacted {
+      @include metafilter;
     }
   }
 }
