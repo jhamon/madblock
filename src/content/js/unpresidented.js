@@ -1,4 +1,4 @@
-import StorageAccess from '../common/storage_access.js';
+import StorageAccess from '../../common/storage_access.js';
 import Redactor from './redactor.js'
 import Profiles from './profiles.js'
 

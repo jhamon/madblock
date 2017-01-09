@@ -17,7 +17,7 @@ module.exports = [{
     ]
   }
 }, {
-  entry: './src/content/unpresidented.js',
+  entry: './src/content/js/unpresidented.js',
   output: { path: __dirname, filename: 'build/content.js' },
   module: {
     loaders: [
