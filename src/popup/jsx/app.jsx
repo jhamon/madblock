@@ -15,7 +15,7 @@ class Unpresidented extends React.Component {
     return <div>
       <div className="header">
         <h1>Unpresidented</h1>
-        <p>Hide stuff that stresses you out and provides no value in your everyday life</p>
+        <p>Hide toxic news that stresses <br /> you out and makes you angry</p>
       </div>
       <Settings redactions={this.state.redactions} />
       <Footer />

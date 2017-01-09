@@ -6,65 +6,109 @@ h5,
 h6 {
     font-family: 'Roboto Slab', serif;
     text-align: center;
+    margin: 0px;
+    font-size: 1.8em;
 }
 
 p {
     text-align: center;
+    font-size: 0.8em;
+}
+.footer {
+    font-size: 0.7em;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
 }
 
 .popup {
-    width: 300px;
-    height: 400px;
-    border: 1px solid black;
+    width: 280px;
+    height: 450px;
+    border: 2px solid black;
     padding: 10px;
 }
 
 #unpresidented {
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid orange;
 }
 
-.redactionOption {
-    padding: 2px;
+.configuration {
+    width: 80%;
+}
+
+div[data-reactroot] {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: no-wrap;
+    justify-content: space-around;
+    align-items: center;
 }
 
 input[type=checkbox] {
+    opacity: 0;
     margin-right: 4px;
+    width: 10px;
+}
+input[type=checkbox] + label:before {
+    content: "";
+    background: white;
+    border: 2px solid black;
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    margin-left: -18px;
+    margin-top: 4px;
+}
+input[type=checkbox]:checked + label:before {
+    background: red;
 }
 
+
 button {
-    background: red;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8em;
+    background: white;
     border: none;
     padding: 5px 8px;
-    border-radius: 2px;
-    border: 1px solid blue;
+    border: 2px solid black;
     width: 100%;
     outline: none;
+}
+button:hover {
+    color: white;
+    background: black;
+    transition: 0.5s;
 }
 button:active {
     position: relative;
     top: 1px;
 }
-
 .button-container {
-    width: 80%;
+    width: 100%;
 }
 
-
 .settings {
-    height: 170px;
-    width: 80%;
-    margin-left: 25px;
-// border: 1px solid black;
+    height: 200px;
+    width: 100%;
+    margin: 10px 0px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+}
+
+.redactionOption {
+    margin: 4px;
+}
+
+a {
+    text-decoration: none;
+    color: red;
+    font-weight: bold;
+}
+a:hover {
+    text-decoration: underline;
 }
