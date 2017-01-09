@@ -43,7 +43,7 @@ const INITIAL_CONFIGURATION = {
   "Terrorism": {
     position: 8,
     enabled: true,
-    keywords: ['shooting', 'shooter','murder','opened fire', 'attack', 'truck attack', 'hijack', 'bomb', 'blast']
+    keywords: ['shooting', 'shooter', 'shot', 'murder','opened fire', 'attack', 'truck attack', 'hijack', 'bomb', 'blast']
   }
 };
 

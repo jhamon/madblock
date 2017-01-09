@@ -39,10 +39,6 @@ function contains(element, string) {
   return element.innerText.indexOf(string) !== -1;
 }
 
-function isLeafNode(element) {
-  return element.children.length === 0;
-}
-
 function filter(list, condition) {
   var filtered = [];
 

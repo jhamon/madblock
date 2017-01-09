@@ -7,6 +7,22 @@ const PROFILES = {
     selectors: ['article', 'a', '.breaking-news', '.cn'],
     label: 'cnn'
   },
+  "www.yahoo.com": {
+    selectors: ['.js-stream-content'],
+    label: 'yahoo'
+  },
+  "news.google.com": {
+    selectors: ['.story', '.topic', '.nav-item'],
+    label: 'google'
+  },
+  "www.huffingtonpost.com": {
+    selectors: ['.card', '.splash'],
+    label: 'huffingtonpost'
+  },
+  "news.ycombinator.com": {
+    selectors: ['.athing'],
+    label: 'hn'
+  },
   "twitter.com": {
     selectors: ['.stream-item', '.tweet'],
     label: 'twitter'

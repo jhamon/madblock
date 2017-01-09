@@ -1,5 +1,5 @@
-@import 'sites/twitter';
-@import 'sites/facebook';
+@import 'hide-matched';
+
 @import 'sites/nytimes';
 @import 'sites/cnn';
 @import 'sites/metafilter';
@@ -12,10 +12,22 @@
     }
 
     &.twitter-redacted {
-      @include twitter;
+      @include hide-matched;
     }
     &.facebook-redacted {
-      @include facebook;
+      @include hide-matched;
+    }
+    &.yahoo-redacted {
+      @include hide-matched;
+    }
+    &.google-redacted {
+      @include hide-matched;
+    }
+    &.huffingtonpost-redacted {
+      @include hide-matched;
+    }
+    &.hn-redacted {
+      @include hide-matched;
     }
     &.nytimes-redacted {
       @include nytimes;
