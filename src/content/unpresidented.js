@@ -4,9 +4,14 @@ import Redactor from './redactor.js'
 let cachedConfig = {};
 
 function blacklistFromConfig(config) {
-  var blacklist = Object.keys(config).filter((key) => {
-    return config[key]
+  var blacklistCategories = Object.keys(config).filter((key) => {
+    return config[key].enabled;
   });
+
+  var blacklist=[];
+  for (var c=0; c < blacklistCategories.length; c++) {
+    blacklist = blacklist.concat(config[blacklistCategories[c]].keywords);
+  }
   console.log("The blacklist is", blacklist);
   return blacklist;
 }

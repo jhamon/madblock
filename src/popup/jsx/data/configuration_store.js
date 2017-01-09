@@ -5,18 +5,46 @@ import {EventEmitter} from 'events'
 import StorageAccess from '../../../common/storage_access.js';
 
 const INITIAL_CONFIGURATION = {
-  "Trump": true,
-  "Obama": true,
-  "Russia": true,
-  "Putin": true,
-  "Hillary": true,
-  "GOP": true,
-  "DNC": true,
-  "Democrat": true,
-  "Republican": true,
-  "President": true,
-  "presidential": true,
-  "POTUS": true
+  "Trump": {
+    position: 1,
+    enabled: true,
+    keywords: ["Trump", "Pence", "Kellyanne Conway", "Jared Kushner", "Ivanka", "Melania", "Breitbart", "Stephen Bannon", "Jeff Sessions"]
+  },
+  "Obama": {
+    position: 2,
+    enabled: true,
+    keywords: ["Obama"]
+  },
+  "Clinton": {
+    position: 3,
+    enabled: true,
+    keywords: ["Hillary", "Clinton", "Podesta", "Huma Abedin", "Tim Kaine"]
+  },
+  "Russia": {
+    position: 4,
+    enabled: true,
+    keywords: ["Putin", "Russia"]
+  },
+  "Democrats": {
+    position: 5,
+    enabled: true,
+    keywords: ["Democrat", "Democrats", "DNC", "Elizabeth Warren", "Bernie Sanders"]
+  },
+  "Republicans": {
+    position: 6,
+    enabled: true,
+    keywords: ["Republican", "GOP", "Mitch McConnell", "Paul Ryan", "McCain"]
+  },
+  "Culture War": {
+    position: 7,
+    enabled: true,
+    keywords: ['Planned Parenthood', 'abortion', 'gay marriage', 'LGBT', 'transgender', 'bathroom', 'the wall', 'NRA', 'gun control']
+  },
+  "Terrorism": {
+    position: 8,
+    enabled: true,
+    keywords: ['shooting', 'shooter','murder','opened fire', 'attack', 'truck attack', 'hijack', 'bomb', 'blast']
+  }
 };
 
 const CHANGE_EVENT = 'change';
@@ -51,24 +79,24 @@ class ConfigurationStore extends EventEmitter {
   }
 
   enable(keyword) {
-    this._configuration[keyword] = true;
+    this._configuration[keyword].enabled = true;
     this.commitChange()
   }
 
   toggle(keyword) {
-    this._configuration[keyword] = !this._configuration[keyword] ;
+    this._configuration[keyword].enabled = !this._configuration[keyword].enabled ;
     this.commitChange()
   }
 
   enableAll() {
     let store = this;
-    Object.keys(this._configuration).forEach((keyword) => { store._configuration[keyword] = true });
+    Object.keys(this._configuration).forEach((keyword) => { store._configuration[keyword].enabled = true });
     this.commitChange()
   }
 
   disableAll() {
     let store = this;
-    Object.keys(this._configuration).forEach((keyword) => { store._configuration[keyword] = false });
+    Object.keys(this._configuration).forEach((keyword) => { store._configuration[keyword].enabled = false });
     this.commitChange()
   }
 

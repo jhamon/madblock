@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import ConfigurationActions from '../data/configuration_actions.js';
 
 function allTrue(obj) {
-  let keywords = Object.keys(obj);
-  for (var k=0; k < keywords.length; k++) {
-    if (obj[keywords[k]] === false) { return false; }
+  let categories = Object.keys(obj);
+  for (var c=0; c < categories.length; c++) {
+    if (obj[categories[c]].enabled === false) { return false; }
   }
   return true;
 }

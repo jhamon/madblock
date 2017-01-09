@@ -53,12 +53,18 @@ gulp.task('copy:html', function() {
       .pipe(gulp.dest('build/'))
 });
 
+gulp.task('copy:icon', function() {
+  gulp.src(['./hat-small.png'])
+      .pipe(gulp.dest('build/'))
+});
+
 
 gulp.task('build', [
   'clean:build',
   'build:js',
   'build:css',
   'copy:html',
+  'copy:icon',
   'copy:manifest'
 ]);
 

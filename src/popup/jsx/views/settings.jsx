@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import _ from 'underscore';
 
 import ToggleAllButton from './toggle_all_button.jsx';
 
@@ -10,17 +11,29 @@ class Settings extends React.Component {
     super(props);
   }
 
+  sortedCategories() {
+    return _.sortBy(
+        _.mapObject(this.props.redactions, function (category, categoryName) {
+          category.name = categoryName;
+          return category;
+        }), (category) => {
+          return category.position
+        });
+  }
+
   render() {
-    let {redactions} = this.props;
+    let sortedCategories = this.sortedCategories();
 
     return <div className="configuration">
-      <ToggleAllButton redactions={redactions} />
+      <ToggleAllButton redactions={sortedCategories}/>
 
       <div className="settings">
-        { Object.keys(this.props.redactions).map(
-            (optionName) => { return <RedactionKeywordOption key={optionName}
-                                                             keyword={optionName}
-                                                             value={redactions[optionName]} /> }
+        { sortedCategories.map(
+            (category) => {
+              return <RedactionKeywordOption key={category.name}
+                                             keyword={category.name}
+                                             value={category.enabled}/>
+            }
         )
         }
       </div>
