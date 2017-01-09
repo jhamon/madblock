@@ -36,7 +36,7 @@ function any(list, func) {
 }
 
 function contains(element, string) {
-  return element.innerText.indexOf(string) !== -1;
+  return element.innerText.toLowerCase().indexOf(string.toLowerCase()) !== -1;
 }
 
 function filter(list, condition) {
