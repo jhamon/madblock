@@ -54,7 +54,7 @@ gulp.task('copy:html', function() {
 });
 
 gulp.task('copy:icon', function() {
-  gulp.src(['./hat-small.png'])
+  gulp.src(['./star.png'])
       .pipe(gulp.dest('build/'))
 });
 

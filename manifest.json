@@ -7,7 +7,7 @@
 
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "hat-small.png",
+    "default_icon": "star.png",
     "default_title": "Silence the noise"
   },
   "permissions": [
