@@ -1,0 +1,11 @@
+@mixin cnn {
+  background: black !important;
+
+  img, .cd__headline-icon {
+    display: none;
+  }
+
+  .breaking-news {
+    color: transparent !important;
+  }
+}

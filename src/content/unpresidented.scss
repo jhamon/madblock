@@ -1,0 +1,19 @@
+@import 'sites/nytimes';
+@import 'sites/cnn';
+
+[unpresidented=true] {
+  .redacted {
+    * {
+      color: transparent !important;
+      background: black !important;
+    }
+
+    &.nytimes-redacted {
+      @include nytimes;
+    }
+
+    &.cnn-redacted {
+      @include cnn;
+    }
+  }
+}

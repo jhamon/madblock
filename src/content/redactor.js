@@ -19,16 +19,24 @@ function getRedacted() {
   return document.getElementsByClassName(REDACT_CLASS);
 }
 
+function label(base) {
+  return `${base}-redacted`;
+}
+
 const Redactor = {
-  redact: function redact(element) {
-    appendClass(element, REDACT_CLASS);
+  redact: function redact(labelBase) {
+    var siteLabel = label(labelBase);
+    return function (element) {
+      appendClass(element, `${siteLabel} ${REDACT_CLASS}`);
+    };
   },
 
-  unredact: function unredact() {
+  unredact: function unredact(labelBase) {
     var previouslyRedacted = getRedacted();
-    var timesToUnredacted = previouslyRedacted.length;
+    var timesToUnredacted  = previouslyRedacted.length;
+    var siteLabel = label(labelBase);
     for (var i = 0; i < timesToUnredacted; i++) {
-      removeClass(previouslyRedacted[0], REDACT_CLASS);
+      removeClass(previouslyRedacted[0], `${siteLabel} ${REDACT_CLASS}`);
     }
   }
 }

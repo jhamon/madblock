@@ -1,5 +1,6 @@
 import StorageAccess from '../common/storage_access.js';
 import Redactor from './redactor.js'
+import Profiles from './profiles.js'
 
 let cachedConfig = {};
 
@@ -52,23 +53,25 @@ function filter(list, condition) {
   return filtered;
 }
 
-function getElements(tag) {
-  return document.getElementsByTagName(tag)
+function getElements(selector) {
+  return document.querySelectorAll(selector)
+}
+
+function selectProfile() {
+  var profile = Profiles[window.location.hostname];
+  profile = profile ? profile : Profiles.default;
+  return profile;
 }
 
 function unpresident() {
-  Redactor.unredact();
+  var profile = selectProfile();
+  document.getElementsByTagName("body")[0].setAttribute("unpresidented", true);
+  Redactor.unredact(profile.label);
   var inBlacklist =  blacklistFilter(cachedConfig);
 
-  filter(getElements('article'), inBlacklist).map(Redactor.redact);
-  filter(getElements('p'), inBlacklist).map(Redactor.redact);
-  filter(getElements('span'), inBlacklist).map(Redactor.redact);
-  filter(getElements('em'), inBlacklist).map(Redactor.redact);
-  filter(getElements('h1'), inBlacklist).map(Redactor.redact);
-  filter(getElements('h2'), inBlacklist).map(Redactor.redact);
-  filter(getElements('h3'), inBlacklist).map(Redactor.redact);
-  filter(getElements('h4'), inBlacklist).map(Redactor.redact);
-  //filter(filter(getElements('div'), isLeafNode), inBlacklist).map(Redactor.redact);
+  profile.selectors.forEach((selector) => {
+    filter(getElements(selector), inBlacklist).map(Redactor.redact(profile.label));
+  });
 }
 
 StorageAccess.get((config) => {

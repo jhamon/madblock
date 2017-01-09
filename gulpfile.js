@@ -39,8 +39,8 @@ function sassify(sourceFiles, destFileName) {
 }
 
 gulp.task('build:css', function () {
-  sassify(['./src/popup/html/styles.css'], 'popup.css');
-  sassify(['./src/content/unpresidented.css'], 'content.css');
+  sassify(['./src/popup/html/styles.scss'], 'popup.css');
+  sassify(['./src/content/unpresidented.scss'], 'content.css');
 });
 
 gulp.task('copy:manifest', function() {
