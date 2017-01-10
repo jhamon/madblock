@@ -10,6 +10,9 @@
     "default_icon": "star.png",
     "default_title": "Silence the noise"
   },
+  "background": {
+    "scripts": ["background.js"]
+  },
   "permissions": [
     "storage",
     "https://ajax.googleapis.com/"

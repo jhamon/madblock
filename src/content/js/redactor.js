@@ -1,4 +1,8 @@
+import BadgeInfo from './badge_info.js'
+
 const REDACT_CLASS = 'redacted';
+
+var redactCount = 0;
 
 function appendClass(element, className) {
   let oldClasses = element.getAttribute("class");
@@ -9,6 +13,7 @@ function appendClass(element, className) {
   if (oldClasses === null) {
     element.setAttribute("class", className);
   }
+  redactCount++;
 }
 
 function removeClass(element, className) {
@@ -28,12 +33,16 @@ const Redactor = {
     var siteLabel = label(labelBase);
     return function (element) {
       appendClass(element, `${siteLabel} ${REDACT_CLASS}`);
+      BadgeInfo.update(redactCount);
     };
   },
 
   unredact: function unredact(labelBase) {
     var previouslyRedacted = getRedacted();
     var timesToUnredacted  = previouslyRedacted.length;
+    redactCount = 0;
+    BadgeInfo.update(redactCount);
+
     var siteLabel = label(labelBase);
     for (var i = 0; i < timesToUnredacted; i++) {
       removeClass(previouslyRedacted[0], `${siteLabel} ${REDACT_CLASS}`);
