@@ -17,7 +17,7 @@ setInterval(() => { madblock(false) }, 1000);
 
 chrome.tabs.onActivated.addListener((e) => {
   console.log("Switching tabs to ", e)
-  madblock(false);
+  madblock(true);
 });
 
 chrome.runtime.onMessage.addListener(function(message, sender) {
