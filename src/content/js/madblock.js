@@ -1,9 +1,6 @@
-import StorageAccess from '../../common/storage_access.js';
 import Redactor from './redactor.js'
 import Profiles from './profiles.js'
 import BadgeInfo from './badge_info.js'
-
-let cachedConfig = {};
 
 function blacklistFromConfig(config) {
   var blacklistCategories = Object.keys(config).filter((key) => {
@@ -60,25 +57,19 @@ function selectProfile() {
   return profile;
 }
 
-function unpresident() {
+function madblock(config) {
   var profile = selectProfile();
   document.getElementsByTagName("body")[0].setAttribute("madblock", true);
-  var inBlacklist =  blacklistFilter(cachedConfig);
-
-  profile.selectors.forEach((selector) => {
-    filter(getElements(selector), inBlacklist).map(Redactor.redact(profile.label));
-  });
+    var inBlacklist =  blacklistFilter(config);
+    profile.selectors.forEach((selector) => {
+      filter(getElements(selector), inBlacklist).map(Redactor.redact(profile.label));
+    });
 }
 
-StorageAccess.get((config) => {
-  cachedConfig = config;
-});
-
-setInterval(unpresident, 1000);
-
-StorageAccess.onChange(function(config) {
-  cachedConfig = config;
-  Redactor.unredact(selectProfile().label);
-
-  unpresident();
+var port = chrome.runtime.connect();
+port.onMessage.addListener(function(msg) {
+  if (msg.type === 'redact') {
+    if (msg.configChange) Redactor.unredact(selectProfile().label);
+    madblock(msg.config);
+  }
 });

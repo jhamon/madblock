@@ -15,6 +15,7 @@
   },
   "permissions": [
     "storage",
+    "tabs",
     "https://ajax.googleapis.com/"
   ],
   "content_scripts": [

@@ -11,7 +11,7 @@ function format(number) {
 }
 
 function update(number) {
-  chrome.runtime.sendMessage({ redactCount: format(number)})
+  chrome.runtime.sendMessage({ type: 'badge', redactCount: format(number)})
 }
 
 function dedupe(func) {
