@@ -8,7 +8,7 @@
   .redacted {
     * {
       color: transparent !important;
-      background: black !important;
+      background: transparent !important;
     }
 
     &.twitter-redacted {
@@ -24,6 +24,9 @@
       @include hide-matched;
     }
     &.huffingtonpost-redacted {
+      @include hide-matched;
+    }
+    &.dailymail-redacted {
       @include hide-matched;
     }
     &.hn-redacted {

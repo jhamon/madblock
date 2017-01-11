@@ -15,6 +15,10 @@ const PROFILES = {
     selectors: ['.story', '.topic', '.nav-item'],
     label: 'google'
   },
+  "www.dailymail.co.uk": {
+    selectors: ['.article', '.puff li', '.tabbed-headlines li', 'a'],
+    label: 'dailymail'
+  },
   "www.huffingtonpost.com": {
     selectors: ['.card', '.splash'],
     label: 'huffingtonpost'
