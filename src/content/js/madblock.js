@@ -62,7 +62,7 @@ function selectProfile() {
 
 function unpresident() {
   var profile = selectProfile();
-  document.getElementsByTagName("body")[0].setAttribute("unpresidented", true);
+  document.getElementsByTagName("body")[0].setAttribute("madblock", true);
   var inBlacklist =  blacklistFilter(cachedConfig);
 
   profile.selectors.forEach((selector) => {

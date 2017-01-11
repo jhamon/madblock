@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'unpresidented:config';
+const STORAGE_KEY = 'madblock:config';
 
 const StorageAccess = {
   get: (callback) => {

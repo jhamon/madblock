@@ -1,5 +1,14 @@
 @mixin nytimes {
-  background: black !important;
+  background: transparent !important;
+  color: transparent !important;
+
+  *:before {
+    background: transparent !important;
+  }
+
+  li, ul {
+    list-style-type: none;
+  }
 
   img, .mediaOverlay, .vhs-xs {
     display: none;

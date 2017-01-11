@@ -19,7 +19,7 @@ module.exports = [{
   output: { path: __dirname, filename: 'build/popup.js' },
   module: es6moduleConfig
 }, {
-  entry: './src/content/js/unpresidented.js',
+  entry: './src/content/js/madblock.js',
   output: { path: __dirname, filename: 'build/content.js' },
   module: es6moduleConfig,
 }, {

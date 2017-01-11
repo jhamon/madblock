@@ -4,18 +4,18 @@ const Categories = [
     keywords: [
       "Trump",
       "Pence",
-      "Kellyanne Conway",
-      "Jared Kushner",
+      "Kellyanne",
+      "Kushner",
       "Ivanka",
       "Melania",
       "Breitbart",
-      "Stephen Bannon",
+      "Bannon",
       "Jeff Sessions"
     ]
   },
   {
     label: "Obama",
-    keywords: ["Obama"]
+    keywords: ["Obama", "Biden"]
   },
   {
     label: "Clinton",
@@ -32,6 +32,7 @@ const Categories = [
     keywords: [
       "Putin",
       "Russia",
+      "Snowden",
       "hacking",
       "cyberwar",
       "kremlin"

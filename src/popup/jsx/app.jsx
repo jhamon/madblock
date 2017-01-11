@@ -5,7 +5,7 @@ import Settings from './views/settings.jsx';
 import Footer from './views/footer.jsx';
 import ConfigurationStore from './data/configuration_store.js';
 
-class Unpresidented extends React.Component {
+class MadBlock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {redactions: {}};
@@ -14,7 +14,7 @@ class Unpresidented extends React.Component {
   render() {
     return <div>
       <div className="header">
-        <h1>Unpresidented</h1>
+        <h1>MadBlock</h1>
         <p>Hide toxic news that stresses you out</p>
       </div>
       <Settings redactions={this.state.redactions} />
@@ -36,5 +36,5 @@ class Unpresidented extends React.Component {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  ReactDOM.render(<Unpresidented/>, document.getElementById('unpresidented'));
+  ReactDOM.render(<MadBlock/>, document.getElementById('madblock'));
 });

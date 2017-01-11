@@ -40,7 +40,7 @@ function sassify(sourceFiles, destFileName) {
 
 gulp.task('build:css', function () {
   sassify(['./src/popup/html/styles.scss'], 'popup.css');
-  sassify(['./src/content/styles/unpresidented.scss'], 'content.css');
+  sassify(['./src/content/styles/madblock.scss'], 'content.css');
 });
 
 gulp.task('copy:manifest', function() {
