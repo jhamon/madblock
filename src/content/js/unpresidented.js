@@ -1,6 +1,7 @@
 import StorageAccess from '../../common/storage_access.js';
 import Redactor from './redactor.js'
 import Profiles from './profiles.js'
+import BadgeInfo from './badge_info.js'
 
 let cachedConfig = {};
 
@@ -50,7 +51,7 @@ function filter(list, condition) {
 }
 
 function getElements(selector) {
-  return document.querySelectorAll(selector)
+  return document.querySelectorAll(`${selector}:not(.redacted)`)
 }
 
 function selectProfile() {
@@ -62,7 +63,6 @@ function selectProfile() {
 function unpresident() {
   var profile = selectProfile();
   document.getElementsByTagName("body")[0].setAttribute("unpresidented", true);
-  Redactor.unredact(profile.label);
   var inBlacklist =  blacklistFilter(cachedConfig);
 
   profile.selectors.forEach((selector) => {
@@ -74,10 +74,11 @@ StorageAccess.get((config) => {
   cachedConfig = config;
 });
 
-document.addEventListener('DOMContentLoaded', unpresident);
-window.addEventListener('load', unpresident);
+setInterval(unpresident, 1000);
 
 StorageAccess.onChange(function(config) {
   cachedConfig = config;
+  Redactor.unredact(selectProfile().label);
+
   unpresident();
 });
