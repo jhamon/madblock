@@ -66,9 +66,9 @@ function madblock(config) {
     });
 }
 
-var port = chrome.runtime.connect();
-port.onMessage.addListener(function(msg) {
+chrome.runtime.onMessage.addListener(function(msg) {
   if (msg.type === 'redact') {
+    console.log("Config change: ", msg.configChange)
     if (msg.configChange) Redactor.unredact(selectProfile().label);
     madblock(msg.config);
   }
