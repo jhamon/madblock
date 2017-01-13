@@ -1,6 +1,6 @@
 const PROFILES = {
   "www.nytimes.com": {
-    selectors: ['article', 'a', '.story', '.ledeStory', '.videoContainer'],
+    selectors: ['a', 'article', '.story', '.ledeStory', '.videoContainer'],
     label: 'nytimes'
   },
   "www.cnn.com": {

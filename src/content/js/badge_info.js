@@ -5,8 +5,10 @@ function format(number) {
     return ""
   } else if(number < 1000) {
     return `${number}`;
-  } else {
+  } else if (number < 10000) {
     return `${Math.round(number/100) / 10}K`;
+  } else {
+    return '10K+';
   }
 }
 

@@ -1,7 +1,6 @@
 import StorageAccess from '../common/storage_access.js';
 
 function redact(tab, configChange) {
-  console.log("Telling ",tab.id," to redact with ", cachedConfig);
   chrome.tabs.sendMessage(tab.id, {"type": "redact", "config": cachedConfig, "configChange": configChange});
 }
 
@@ -20,11 +19,27 @@ chrome.tabs.onActivated.addListener((e) => {
   madblock(true);
 });
 
+function buildArrayFromArguments(message) {
+  var messageObj = message.message;
+  var argArray   = [];
+  for (var i = 0; i < Object.keys(messageObj).length; i++) {
+    argArray.push(messageObj[i]);
+  }
+  return argArray;
+}
+
 chrome.runtime.onMessage.addListener(function(message, sender) {
-  console.log(message, sender);
   if (sender.tab.active && message.type === 'badge') {
     chrome.browserAction.setBadgeText({ text: message.redactCount });
   }
+  if (message.type === 'info') {
+    var argArray = buildArrayFromArguments(message);
+    argArray.unshift(`Tab ${sender.tab.id}: `);
+    console.info.apply(this, argArray);
+    return;
+  }
+
+  console.log(message, sender);
 });
 
 var cachedConfig = {};

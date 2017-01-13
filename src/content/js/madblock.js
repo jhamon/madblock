@@ -1,6 +1,7 @@
 import Redactor from './redactor.js'
 import Profiles from './profiles.js'
 import BadgeInfo from './badge_info.js'
+import Logger from './logger.js'
 
 function blacklistFromConfig(config) {
   var blacklistCategories = Object.keys(config).filter((key) => {
@@ -11,12 +12,11 @@ function blacklistFromConfig(config) {
   for (var c=0; c < blacklistCategories.length; c++) {
     blacklist = blacklist.concat(config[blacklistCategories[c]].keywords);
   }
-  console.log("The blacklist is", blacklist);
+  Logger.log("The blacklist is", blacklist);
   return blacklist;
 }
 
 function blacklistFilter(config) {
-  console.log('building a blacklist filter')
   var blacklist = blacklistFromConfig(config);
 
   return function(element) {
@@ -37,18 +37,14 @@ function contains(element, string) {
   return element.innerText.toLowerCase().indexOf(string.toLowerCase()) !== -1;
 }
 
-function filter(list, condition) {
-  var filtered = [];
+function partition(list, condition) {
+  var partitions = {good: [], bad: []};
 
-  for (var i = 0; i < list.length; i++) {
-    condition(list[i]) ? filtered.push(list[i]) : null;
-  }
+  list.forEach(function(item) {
+    condition(item) ? partitions.good.push(item) : partitions.bad.push(item);
+  });
 
-  return filtered;
-}
-
-function getElements(selector) {
-  return document.querySelectorAll(`${selector}:not(.redacted)`)
+  return partitions;
 }
 
 function selectProfile() {
@@ -57,19 +53,32 @@ function selectProfile() {
   return profile;
 }
 
+var redactionCount = 0;
+
 function madblock(config) {
   var profile = selectProfile();
   document.getElementsByTagName("body")[0].setAttribute("madblock", true);
-    var inBlacklist =  blacklistFilter(config);
-    profile.selectors.forEach((selector) => {
-      filter(getElements(selector), inBlacklist).map(Redactor.redact(profile.label));
-    });
+  var inBlacklist =  blacklistFilter(config);
+
+  profile.selectors.forEach((selector) => {
+    var elementsToRedact = Redactor.getElements(selector);
+    var partitioned = partition(elementsToRedact, inBlacklist);
+    Logger.log(partitioned);
+    Redactor.markAll(partitioned.bad);
+    Redactor.redactAll(partitioned.good, profile.label);
+    redactionCount += partitioned.good.length;
+  });
+  BadgeInfo.update(redactionCount);
 }
 
 chrome.runtime.onMessage.addListener(function(msg) {
+  Logger.log(">>>>>>>>>>>>>>>>>>>>>>");
   if (msg.type === 'redact') {
-    console.log("Config change: ", msg.configChange)
-    if (msg.configChange) Redactor.unredact(selectProfile().label);
+    Logger.log("Config change: ", msg.configChange);
+    if (msg.configChange) {
+      redactionCount = 0;
+      Redactor.unredact(selectProfile().label);
+    }
     madblock(msg.config);
   }
 });
